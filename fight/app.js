@@ -1,41 +1,3 @@
-//IDEAS
-// add feature where user can input where  they want to hunt
-// for wild pokemon
-// give percentage chance for rare types of pokemon
-// can use items like weed lol to increase your chances of catching
-//have option to watch adds to get poke balls
-//computer lab / lazy at work game
-//have the pokemon you catch be rappers
-// play their songs in the battle section
-// have them say their funny lines as their "pokemon cry"
-// have place where all their pokemon are stored
-// have option to play friends
-
-//pokemon battle requirements
-
-//animation for beginning of the battle
-//top and bottom div slide in
-//animation of pokemon being thrown
-
-//as a user i can...
-
-//input a custom name for my player
-
-//choose wether to fight, use and item, or change pokemon
-//modal comes up for pokemon/ items
-
-//choose what attack i can usez
-
-//see the type of the pokemon i have
-
-//see my own and the enemys hp
-
-//use super effective attacks depending on the type
-
-// know wether I have won or lost
-
-//
-
 //UI CLASS
 //initiates animations
 //displays when game is over
@@ -45,8 +7,50 @@
 //holds game state
 //checks if game is over or not
 //checks if pokemon has fainted
+class Game {
+  //array of players
+  //current players turn
+  //attack animation
+  //state of game
+  static checkForDefeat(player) {
+    //if player is out of pokemon
+    // diplay win if player is enemy
+    //display lose if player is user
+  }
+  static displayResultModal(result) {
+    //if result equals win show win modal
+    //else show lose modal
+  }
+}
+
+// Player class
+class Player {
+  constructor(fighters, items) {
+    this.fighters = fighters;
+    this.items = items;
+  }
+}
 
 //POKEMON CLASS
+class Fighter {
+  constructor(health, type, attacks) {
+    this.health = health;
+    this.type = type;
+    this.attacks = attacks;
+    this.condition = "healthy";
+  }
+}
+
+//Attack Class
+class Attack {
+  constructor(type, damage, inflictorProbability, pp) {
+    this.type = type;
+    this.damage = damage;
+    this.inflictorProbability = inflictorProbability;
+    this.pp = pp;
+  }
+}
+
 //properties
 //health
 //condition(like psn/paralzed)
@@ -57,5 +61,10 @@
 // heal (item as parameter)
 
 //checks when to play animations
+
+function sum(a, b) {
+  return a + b;
+}
+module.exports = sum;
 
 console.log("fart");
