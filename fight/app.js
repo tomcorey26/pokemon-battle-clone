@@ -26,11 +26,16 @@ class Game {
 // Player class
 class Player {
   constructor(fighters, items) {
-    this.fighters = fighters;
+    this.healthyFighters = fighters;
+    this.faintedFighters = [];
     this.items = items;
   }
 }
 
+//properties
+//health
+//condition(like psn/paralzed)
+//type
 //POKEMON CLASS
 class Fighter {
   constructor(health, type, attacks) {
@@ -39,32 +44,59 @@ class Fighter {
     this.attacks = attacks;
     this.condition = "healthy";
   }
-}
+  checkEffectiveness(moveType, enemyType) {}
 
-//Attack Class
-class Attack {
-  constructor(type, damage, inflictorProbability, pp) {
-    this.type = type;
-    this.damage = damage;
-    this.inflictorProbability = inflictorProbability;
-    this.pp = pp;
+  useAttack(attack, enemy) {
+    //play attack animation
+
+    //calculate hit or miss
+    let onTarget;
+    let randomNum = Math.random();
+    if (randomNum < attack.accuracy) {
+      //decrement enemy health
+      enemy.health -= attack.damage;
+    } else {
+      console.log("attack missed!");
+    }
+    //switch turn to cpu or other player
   }
 }
 
-//properties
-//health
-//condition(like psn/paralzed)
-//type
 //attacks and their damages (object) and their pp
 //method use normal attack
 //method use status inflicting attack
 // heal (item as parameter)
+//Attack Class
+class Attack {
+  constructor(type, damage, inflictorProbability, pp, accuracy) {
+    this.type = type;
+    this.damage = damage;
+    this.inflictorProbability = inflictorProbability;
+    this.pp = pp;
+    this.accuracy = accuracy;
+  }
+}
+
+let smash = new Attack("rock", 20, 0.1, 10, 0.8);
+let cut = new Attack("scissors", 10, 0.1, 20, 0.9);
+let smother = new Attack("paper", 40, 0.2, 5, 0.6);
+
+let tom = new Fighter(100, "rock", [smash, cut, smother]);
+let rick = new Fighter(100, "scissors", [smash, cut, smother]);
+
+let attack = document.getElementById("attack");
+
+attack.addEventListener("click", e => {
+  e.preventDefault();
+  console.log(rick);
+  console.log(tom);
+  tom.useAttack(tom.attacks[2], rick);
+  console.log(rick.health);
+});
 
 //checks when to play animations
 
-function sum(a, b) {
-  return a + b;
-}
-module.exports = sum;
-
-console.log("fart");
+// function sum(a, b) {
+//   return a + b;
+// }
+// module.exports = sum;
