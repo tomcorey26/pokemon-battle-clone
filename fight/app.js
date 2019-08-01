@@ -8,6 +8,20 @@
 //checks if game is over or not
 //checks if pokemon has fainted
 class Game {
+  constructor() {
+    this.players = [];
+    this.currentPlayer = 0;
+    this.gameState = true;
+    this.roundCount = 0;
+  }
+
+  addplayer(player) {
+    this.players = [...this.players, player];
+  }
+
+  //gives both players 6 random pokemon
+  distributeFighters() {}
+
   //array of players
   //current players turn
   //attack animation
@@ -91,6 +105,9 @@ class Fighter {
     } else {
       console.log("attack missed!");
     }
+
+    //check for health being 0
+    //check for defeat
     //switch turn to cpu or other player
   }
 }
@@ -108,12 +125,17 @@ function Attack(type, damage, inflictorProbability, pp, accuracy) {
   this.accuracy = accuracy;
 }
 
+let game = new Game();
+
 let smash = new Attack("rock", 20, 0.1, 10, 0.8);
 let cut = new Attack("scissors", 10, 0.1, 20, 0.9);
 let smother = new Attack("paper", 40, 0.2, 5, 0.6);
 
 let tom = new Fighter(100, "rock", [smash, cut, smother]);
 let rick = new Fighter(100, "scissors", [smash, cut, smother]);
+
+game.addplayer(tom);
+game.addplayer(rick);
 
 let attack = document.getElementById("attack");
 
