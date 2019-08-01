@@ -100,14 +100,12 @@ class Fighter {
 //method use status inflicting attack
 // heal (item as parameter)
 //Attack Class
-class Attack {
-  constructor(type, damage, inflictorProbability, pp, accuracy) {
-    this.type = type;
-    this.damage = damage;
-    this.inflictorProbability = inflictorProbability;
-    this.pp = pp;
-    this.accuracy = accuracy;
-  }
+function Attack(type, damage, inflictorProbability, pp, accuracy) {
+  this.type = type;
+  this.damage = damage;
+  this.inflictorProbability = inflictorProbability;
+  this.pp = pp;
+  this.accuracy = accuracy;
 }
 
 let smash = new Attack("rock", 20, 0.1, 10, 0.8);
