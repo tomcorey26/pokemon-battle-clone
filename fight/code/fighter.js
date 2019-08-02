@@ -1,7 +1,3 @@
-//properties
-//health
-//condition(like psn/paralzed)
-//type
 //POKEMON CLASS
 export class Fighter {
   constructor(health, type, attacks) {
