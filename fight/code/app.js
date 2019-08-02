@@ -32,7 +32,12 @@ class Game {
     this.gameState = true;
     this.roundCount = 0;
   }
+  startGame(player1, player2) {
+    game.addplayer(player1);
+    game.addplayer(player2);
 
+    game.distributeFighters(6);
+  }
   addplayer(player) {
     this.players = [...this.players, player];
   }
@@ -74,21 +79,18 @@ class Game {
       fighters.push(fighter);
     }
 
-    //randomly select one value from each array
-    //create new fighter object with values
-    //return
     return fighters;
   }
 
   //gives both players random pokemon
   //parameter is amount wanted
   distributeFighters(amount) {
-    this.player.forEach(index => {
+    for (let i = 0; i < 2; i++) {
       //create fighters array
-
+      let fighters = this.createFighters(amount);
       //add to
-      this.player[index].healthyFighters.push();
-    });
+      this.players[i].healthyFighters = fighters;
+    }
   }
 
   //array of players
@@ -112,16 +114,12 @@ function getRandomInt(max) {
 
 let game = new Game();
 
-let tom = new Fighter(100, "rock", [smash, cut, smother]);
-let rick = new Fighter(100, "scissors", [smash, cut, smother]);
+let tom = new Player([]);
+let rob = new Player([]);
 
-game.addplayer(tom);
-game.addplayer(rick);
+game.startGame(tom, rob);
 
-let figherArr = game.createFighters(6);
-console.log(figherArr);
-//game generate pokemon
-//game distribute
+console.log(game);
 
 //ATTACK BUTTON
 let attack = document.getElementById("enemy-attack");
