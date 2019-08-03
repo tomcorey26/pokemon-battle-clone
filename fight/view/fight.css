@@ -14,12 +14,48 @@ html {
   display: grid;
 }
 
+/* Screen Halves */
 .enemy-half {
-  background: blue;
+  display: grid;
+  background: orange;
   min-height: 50vh;
+  grid-template-columns: 1fr 1fr;
 }
 
 .player-half {
-  background: green;
+  display: grid;
+  background: rgb(7, 255, 255);
   min-height: 50vh;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Move boxes */
+#enemy-moves {
+  display: grid;
+  grid-gap: 0.2rem;
+  margin: 1rem;
+}
+
+#player-moves {
+  display: grid;
+  grid-gap: 0.2rem;
+  margin: 1rem;
+}
+
+/* Fighter box */
+.fighter-display {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.fighter-picture {
+  margin-top: auto;
+}
+
+.status-bar {
+  margin-top: auto;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
 }

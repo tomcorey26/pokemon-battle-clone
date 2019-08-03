@@ -16,19 +16,64 @@
     <!-- GAME -->
     <div class="game-container">
       <div class="enemy-half">
-        <p>Enemy</p>
-        <button id="enemy-attack" type="button" class="nes-btn is-primary">
-          Use attack
-        </button>
+        <div id="enemy-moves" class="nes-container is-rounded">
+          <p>Player 1</p>
+          <button id="enemy-attack1" type="button" class="nes-btn is-primary">
+            Use attack
+          </button>
+          <button id="enemy-attack2" type="button" class="nes-btn is-primary">
+            Use attack
+          </button>
+          <button id="enemy-attack3" type="button" class="nes-btn is-primary">
+            Use attack
+          </button>
+          <button id="enemy-attack4" type="button" class="nes-btn is-primary">
+            Use attack
+          </button>
+        </div>
+        <div id="enemy-display" class="fighter-display">
+          <div class="fighter-picture">Picture</div>
+          <div class="nes-container status-bar">
+            <p>Status bar</p>
+            <progress
+              class="nes-progress is-success"
+              value="100"
+              max="100"
+            ></progress>
+          </div>
+        </div>
       </div>
       <div class="player-half">
-        <p>Player</p>
-        <button id="player-attack" type="button" class="nes-btn is-primary">
-          Use attack
+        <div id="player-display" class="fighter-display">
+          <div class="fighter-picture">Picture</div>
+          <div class="nes-container status-bar">
+            <p>Status bar</p>
+            <progress
+              class="nes-progress is-success"
+              value="100"
+              max="100"
+            ></progress>
+          </div>
+        </div>
+        <div id="player-moves" class="nes-container is-rounded">
+          <p>Player 2</p>
+          <button id="player-attack1" type="button" class="nes-btn is-primary">
+            Use attack
+          </button>
+          <button id="player-attack2" type="button" class="nes-btn is-primary">
+            Use attack
+          </button>
+          <button id="player-attack3" type="button" class="nes-btn is-primary">
+            Use attack
+          </button>
+          <button id="player-attack4" type="button" class="nes-btn is-primary">
+            Use attack
+          </button>
+        </div>
       </div>
     </div>
 
     <a href="/home/index.html">Dev link to index.html</a>
   </body>
-  <script src="../code/app.js" type="module" ></script>
+  <script src="../code/app.js" type="module"></script>
 </html>
