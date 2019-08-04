@@ -1,6 +1,7 @@
 import { Attack } from "./attack.js";
 import { Fighter } from "./fighter.js";
 import { Player } from "./player.js";
+import { UI } from "./ui.js";
 
 //UI CLASS
 //initiates animations
@@ -37,6 +38,7 @@ class Game {
     game.addplayer(player2);
 
     game.distributeFighters(6);
+    UI.populateMoves(player1.healthyFighters[0], player2.healthyFighters[0]);
   }
   addplayer(player) {
     this.players = [...this.players, player];
