@@ -23,4 +23,16 @@ export class UI {
       }
     }
   }
+  static clearMovesContent(el) {
+    let arr = Array.from(el.children);
+    arr.forEach(child => {
+      child.style.display = "none";
+    });
+  }
+  static showMovesContent(el) {
+    let arr = Array.from(el.children);
+    arr.forEach(child => {
+      child.style.display = "block";
+    });
+  }
 }

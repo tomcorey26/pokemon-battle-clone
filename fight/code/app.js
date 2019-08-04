@@ -26,6 +26,7 @@ let contain = new Attack("contain", "paper", 30, 0.3, 15, 0.7);
 //checks if game is over or not
 //checks if pokemon has fainted
 //create pokemon method
+let topMoves = document.getElementById("enemy-moves");
 class Game {
   constructor() {
     this.players = [];
