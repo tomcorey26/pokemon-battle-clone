@@ -1,3 +1,7 @@
+//UI CLASS
+//initiates animations
+//displays when game is over
+// if you won / lost
 export class UI {
   static populateMoves(fighter1, fighter2) {
     let topMoves = document.getElementById("enemy-moves");

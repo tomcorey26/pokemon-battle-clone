@@ -3,11 +3,6 @@ import { Fighter } from "./fighter.js";
 import { Player } from "./player.js";
 import { UI } from "./ui.js";
 
-//UI CLASS
-//initiates animations
-//displays when game is over
-// if you won / lost
-
 //test moves
 let smash = new Attack("smash", "rock", 30, 0.1, 10, 0.8);
 let pound = new Attack("pound", "rock", 50, 0.1, 5, 0.5);
@@ -35,6 +30,10 @@ class Game {
       player1: "",
       player2: ""
     };
+    this.currentFighters = {
+      player1: "",
+      player2: ""
+    };
     this.roundCount = 0;
   }
   startGame(player1, player2) {
@@ -42,6 +41,9 @@ class Game {
     game.addplayer(player2);
 
     game.distributeFighters(6);
+
+    game.currentFighters.player1 = player1.healthyFighters[0];
+    game.currentFighters.player2 = player2.healthyFighters[0];
     UI.populateMoves(player1.healthyFighters[0], player2.healthyFighters[0]);
   }
 
@@ -70,6 +72,7 @@ class Game {
     if (game.currentMoves.player1 && game.currentMoves.player2) {
       //if they do run fight begin method
       console.log("both moves selected");
+      game.playRound();
     }
   }
 
