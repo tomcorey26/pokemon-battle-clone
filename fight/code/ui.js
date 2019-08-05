@@ -15,11 +15,11 @@ export class UI {
 
       //color code based off move type
       if (currAttack.type === "rock") {
-        currMoveBtn.className += " is-warning";
+        currMoveBtn.className = "nes-btn is-warning";
       } else if (currAttack.type === "scissors") {
-        currMoveBtn.className += " is-error";
+        currMoveBtn.className = "nes-btn is-error";
       } else {
-        currMoveBtn.className += " is-success";
+        currMoveBtn.className = "nes-btn is-success";
       }
     }
   }
@@ -35,4 +35,5 @@ export class UI {
       child.style.display = "block";
     });
   }
+  static disableButtons() {}
 }

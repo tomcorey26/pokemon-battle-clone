@@ -30,8 +30,11 @@ let topMoves = document.getElementById("enemy-moves");
 class Game {
   constructor() {
     this.players = [];
-    this.currentPlayerIndex = 0;
     this.gameState = true;
+    this.currentMoves = {
+      player1: "",
+      player2: ""
+    };
     this.roundCount = 0;
   }
   startGame(player1, player2) {
@@ -41,12 +44,52 @@ class Game {
     game.distributeFighters(6);
     UI.populateMoves(player1.healthyFighters[0], player2.healthyFighters[0]);
   }
+
+  handleMoveSelect(e) {
+    let id = e.target.id;
+    let move = e.target.textContent;
+
+    //check wether player 1 or player 2 move
+    //load to current moves
+    if (id.includes("enemy") === true) {
+      game.currentMoves.player1 = move;
+    } else {
+      game.currentMoves.player2 = move;
+    }
+
+    let moveContainer = e.target.parentNode;
+    let children = moveContainer.childNodes;
+
+    //disable buttons
+    for (let i = 2; i < children.length; i++) {
+      children[i].className = "nes-btn is-disabled";
+    }
+    children[1].innerHTML += " Move Selected!";
+
+    //check if both players have moves selected
+    if (game.currentMoves.player1 && game.currentMoves.player2) {
+      //if they do run fight begin method
+      console.log("both moves selected");
+    }
+  }
+
+  playRound() {
+    //this method will do the attacks
+    //write to dialouge
+    //play animations
+    //clear current moves
+    //increment round count
+    //check if fighter has fainted
+    //undisable buttons
+  }
+
   addplayer(player) {
     this.players = [...this.players, player];
   }
 
   createFighters(amount) {
     let attributes = {
+      speed: [1, 2, 3, 4, 5],
       health: [100, 150, 80, 200],
       types: ["rock", "paper", "scissors"],
       rockAttacks: [smash, pound, punch],
@@ -59,6 +102,8 @@ class Game {
     for (let i = 0; i < amount; i++) {
       let healthIndex = getRandomInt(attributes.health.length);
       let typeIndex = getRandomInt(attributes.types.length);
+      let speedIndex = getRandomInt(attributes.speed.length);
+
       let attacks;
       if (attributes.types[typeIndex] === "rock") {
         attacks = attributes.rockAttacks;
@@ -76,7 +121,8 @@ class Game {
       let fighter = new Fighter(
         attributes.health[healthIndex],
         attributes.types[typeIndex],
-        attacks
+        attacks,
+        attributes.speed[speedIndex]
       );
       //push new fighter to fighters array
       fighters.push(fighter);
@@ -124,17 +170,10 @@ game.startGame(tom, rob);
 
 console.log(game);
 
-//ATTACK BUTTON
-let attack = document.getElementById("enemy-attack");
-
-attack.addEventListener("click", e => {
-  e.preventDefault();
-  console.log(rick);
-  console.log(tom);
-  tom.useAttack(tom.attacks[2], rick);
-  console.log(rick.health);
+let moves = document.querySelectorAll(".nes-btn");
+moves.forEach(move => {
+  move.addEventListener("click", game.handleMoveSelect);
 });
-
 //queryselector all loop that checks
 //if each of the attacks has been chosen
 //for disabling of button
