@@ -1,6 +1,7 @@
 //POKEMON CLASS
 export class Fighter {
   constructor(health, type, attacks, speed) {
+    this.baseHealth = health;
     this.speed = speed;
     this.health = health;
     this.type = type;
@@ -16,7 +17,7 @@ export class Fighter {
     };
 
     if (moveType == enemyType) {
-      return normal;
+      return multiplier.normal;
     } else if (moveType == "rock") {
       if (enemyType == "paper") {
         return multiplier.notEffective;
