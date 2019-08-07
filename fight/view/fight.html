@@ -17,7 +17,7 @@
     <div class="game-container">
       <div class="enemy-half">
         <div id="enemy-moves" class="nes-container is-rounded">
-          <p>Player 1</p>
+          <p id="top-title">Player 1</p>
           <button id="enemy-attack1" type="button" class="nes-btn">
             Use attack
           </button>
@@ -38,6 +38,7 @@
           <div class="nes-container status-bar">
             <p>Status bar</p>
             <progress
+              id="topBar"
               class="nes-progress is-success"
               value="100"
               max="100"
@@ -53,6 +54,7 @@
           <div class="nes-container status-bar">
             <p>Status bar</p>
             <progress
+              id="bottomBar"
               class="nes-progress is-success"
               value="100"
               max="100"
@@ -60,7 +62,9 @@
           </div>
         </div>
         <div id="player-moves" class="nes-container is-rounded">
-          <p>Player 2</p>
+          <p id="bottom-title">
+            Player 2
+          </p>
           <button id="player-attack1" type="button" class="nes-btn">
             Use attack
           </button>

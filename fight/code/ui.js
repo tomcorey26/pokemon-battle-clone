@@ -39,5 +39,28 @@ export class UI {
       child.style.display = "block";
     });
   }
+  static adjustHealth(bar, newHealth, oldHealth) {
+    let barPercentage = (newHealth / oldHealth) * 100;
+    if (bar === "top") {
+      let newBar = document.getElementById("topBar");
+      newBar.setAttribute("value", String(barPercentage));
+      UI.adjustBarColor(newBar, barPercentage);
+    } else {
+      let newBar = document.getElementById("bottomBar");
+      newBar.setAttribute("value", String(barPercentage));
+      UI.adjustBarColor(newBar, barPercentage);
+    }
+  }
+
+  static adjustBarColor(bar, percentage) {
+    console.log(percentage);
+    if (percentage <= 50) {
+      bar.className = "nes-progress is-warning";
+    }
+    if (percentage <= 20) {
+      bar.className = "nes-progress is-error";
+    }
+  }
+
   static disableButtons() {}
 }

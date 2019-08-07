@@ -62,11 +62,12 @@ class Game {
     let moveContainer = e.target.parentNode;
     let children = moveContainer.childNodes;
 
+    //TODO make UI method for this part
     //disable buttons
     for (let i = 2; i < children.length; i++) {
       children[i].className = "nes-btn is-disabled";
     }
-    children[1].innerHTML += " Move Selected!";
+    children[1].innerHTML = "Move Selected!";
 
     //check if both players have moves selected
     if (game.currentMoves.player1 && game.currentMoves.player2) {
@@ -77,13 +78,66 @@ class Game {
   }
 
   playRound() {
-    //this method will do the attacks
+    //set to variarbles for easy reference
+    let fighter1 = this.currentFighters.player1;
+    let fighter2 = this.currentFighters.player2;
+    let attack1;
+    let attack2;
+
+    fighter1.attacks.forEach(attack => {
+      if (attack.name.includes(this.currentMoves.player1)) {
+        attack1 = attack;
+      }
+    });
+
+    fighter2.attacks.forEach(attack => {
+      if (attack.name.includes(this.currentMoves.player2)) {
+        attack2 = attack;
+      }
+    });
+
+    if (fighter1.speed > fighter2.speed) {
+      //display text in box
+      //do fighter one attack
+      fighter1.useAttack(attack1, fighter2);
+      //blah blah used ...
+      //do animation
+      //adjust health bar
+      UI.adjustHealth("bottom", fighter2.health, fighter2.baseHealth);
+
+      fighter2.useAttack(attack2, fighter1);
+      UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
+      //its supereffective /not effective
+      //check for fainted
+    } else {
+      //fighter2
+      fighter2.useAttack(attack2, fighter1);
+      UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
+
+      //fighter1 attack
+      fighter1.useAttack(attack1, fighter2);
+      UI.adjustHealth("bottom", fighter2.health, fighter2.baseHealth);
+      //blah blah used ...
+      //do animation
+      //adjust health bar
+    }
+    this.resetRound(fighter1, fighter2);
     //write to dialouge
     //play animations
-    //clear current moves
     //increment round count
     //check if fighter has fainted
     //undisable buttons
+  }
+
+  resetRound(fighter1, fighter2) {
+    //clear current moves
+    this.currentMoves.player1 = "";
+    this.currentMoves.player2 = "";
+    UI.populateMoves(fighter1, fighter2);
+    let topTitle = document.getElementById("top-title");
+    let botTitle = document.getElementById("bottom-title");
+    topTitle.innerHTML = "Player 1";
+    botTitle.innerHTML = "Player 2";
   }
 
   addplayer(player) {
