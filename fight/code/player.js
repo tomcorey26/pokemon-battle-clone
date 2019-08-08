@@ -1,3 +1,5 @@
+import { UI } from "./ui.js";
+
 // Player class
 export class Player {
   constructor(items) {
