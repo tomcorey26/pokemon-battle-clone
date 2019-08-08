@@ -49,7 +49,7 @@ class Game {
     this.addplayer(player1);
     this.addplayer(player2);
 
-    this.distributeFighters(2);
+    this.distributeFighters(1);
 
     this.currentFighters.player1 = player1.healthyFighters[0];
     this.currentFighters.player2 = player2.healthyFighters[0];
@@ -111,7 +111,12 @@ class Game {
 
     return nextFighter;
   }
-
+  playerIsDefeated(numLeft) {
+    if (numLeft === 1) {
+      return true;
+    }
+    return false;
+  }
   playRound() {
     //set to variarbles for easy reference
     let fighter1 = this.currentFighters.player1;
@@ -139,6 +144,10 @@ class Game {
       UI.adjustHealth("bottom", fighter2.health, fighter2.baseHealth);
 
       if (fighter2.health <= 0) {
+        if (this.playerIsDefeated(this.players[1].healthyFighters.length)) {
+          UI.displayResultModal("player1");
+          return;
+        }
         fighter2 = this.handleFaint("bottom");
         isfainted = true;
       }
@@ -150,9 +159,15 @@ class Game {
         UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
       }
 
+      //if fainted handle
       if (fighter1.health <= 0) {
+        if (this.playerIsDefeated(this.players[0].healthyFighters.length)) {
+          UI.displayResultModal("player2");
+          return;
+        }
         fighter1 = this.handleFaint("top");
       }
+
       //its supereffective /not effective
       //check for fainted
     } else {
@@ -160,6 +175,10 @@ class Game {
       UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
 
       if (fighter1.health <= 0) {
+        if (this.playerIsDefeated(this.players[0].healthyFighters.length)) {
+          UI.displayResultModal("player2");
+          return;
+        }
         fighter1 = this.handleFaint("top");
       }
 
@@ -170,6 +189,10 @@ class Game {
       }
 
       if (fighter2.health <= 0) {
+        if (this.playerIsDefeated(this.players[1].healthyFighters.length)) {
+          UI.displayResultModal("player1");
+          return;
+        }
         fighter2 = this.handleFaint("bottom");
       }
     }
