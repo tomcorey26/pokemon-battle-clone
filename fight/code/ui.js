@@ -3,6 +3,28 @@
 //displays when game is over
 // if you won / lost
 export class UI {
+  static addFighterPictures() {
+    fetch("https://api.imgflip.com/get_memes").then(x =>
+      x.json().then(res => {
+        let picDivs = Array.from(document.querySelectorAll(".fighter-picture"));
+
+        picDivs.forEach(div => {
+          let randomNum = getRandomInt(99);
+          let randomMeme = res.data.memes[randomNum].url;
+          div.innerHTML = `<img src="${randomMeme}" alt="moth" />`;
+        });
+      })
+    );
+  }
+  static addFighterPicture(div) {
+    fetch("https://api.imgflip.com/get_memes").then(x =>
+      x.json().then(res => {
+        let randomNum = getRandomInt(99);
+        let randomMeme = res.data.memes[randomNum].url;
+        div.innerHTML = `<img src="${randomMeme}" alt="moth" />`;
+      })
+    );
+  }
   static populateMoves(fighter1, fighter2) {
     let topMoves = document.getElementById("enemy-moves");
     let bottomMoves = document.getElementById("player-moves");
@@ -55,6 +77,9 @@ export class UI {
 
   static adjustBarColor(bar, percentage) {
     console.log(percentage);
+    if (percentage > 50) {
+      bar.className = "nes-progress is-success";
+    }
     if (percentage <= 50) {
       bar.className = "nes-progress is-warning";
     }
@@ -66,8 +91,6 @@ export class UI {
     el.innerHTML = `<h1>${user.name} used ${attack.name}</h1>`;
     el.style.display = "block";
   }
-
-  static disableButtons() {}
 }
 
 function wait(ms) {
@@ -76,4 +99,8 @@ function wait(ms) {
   while (end < start + ms) {
     end = new Date().getTime();
   }
+}
+
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
 }

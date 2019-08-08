@@ -54,6 +54,7 @@ class Game {
     this.currentFighters.player1 = player1.healthyFighters[0];
     this.currentFighters.player2 = player2.healthyFighters[0];
     UI.populateMoves(player1.healthyFighters[0], player2.healthyFighters[0]);
+    UI.addFighterPictures();
   }
 
   handleMoveSelect(e) {
@@ -108,6 +109,8 @@ class Game {
     let bottomBar = document.getElementById("player-moves");
     let topTitle = document.getElementById("top-title");
     let botTitle = document.getElementById("bottom-title");
+    let topImg = document.getElementById("top-picture");
+    let bottomImg = document.getElementById("bottom-picture");
     if (fighter1.speed > fighter2.speed) {
       console.log("aye");
       //display text in box
@@ -115,22 +118,50 @@ class Game {
       fighter1.useAttack(attack1, fighter2);
       UI.adjustHealth("bottom", fighter2.health, fighter2.baseHealth);
 
-      if (fighter2.health < 0) {
+      if (fighter2.health <= 0) {
+        let nextFighter = this.players[1].sendOutNextFighter();
+        this.currentFighters.player2 = nextFighter;
+        fighter2 = nextFighter;
+        UI.addFighterPicture(bottomImg);
+        UI.adjustHealth("bottom", 1, 1);
       }
 
       //if fighter 2 dead return
       //if alive use attack
       fighter2.useAttack(attack2, fighter1);
       UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
+      if (fighter1.health <= 0) {
+        let nextFighter = this.players[0].sendOutNextFighter();
+        this.currentFighters.player1 = nextFighter;
+        fighter1 = nextFighter;
+        UI.addFighterPicture(topImg);
+        UI.adjustHealth("top", 1, 1);
+      }
       //its supereffective /not effective
       //check for fainted
     } else {
       fighter2.useAttack(attack2, fighter1);
       UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
 
+      if (fighter1.health <= 0) {
+        let nextFighter = this.players[0].sendOutNextFighter();
+        this.currentFighters.player1 = nextFighter;
+        fighter1 = nextFighter;
+        UI.addFighterPicture(topImg);
+        UI.adjustHealth("top", 1, 1);
+      }
+
       //do fighter one attack
       fighter1.useAttack(attack1, fighter2);
       UI.adjustHealth("bottom", fighter2.health, fighter2.baseHealth);
+
+      if (fighter2.health <= 0) {
+        let nextFighter = this.players[1].sendOutNextFighter();
+        this.currentFighters.player2 = nextFighter;
+        fighter2 = nextFighter;
+        UI.addFighterPicture(bottomImg);
+        UI.adjustHealth("bottom", 1, 1);
+      }
     }
     this.resetRound(fighter1, fighter2);
     //write to dialouge
