@@ -16,6 +16,8 @@ let smother = new Attack("smother", "paper", 40, 0.2, 5, 0.6);
 let envelop = new Attack("envelop", "paper", 20, 0.3, 12, 0.9);
 let contain = new Attack("contain", "paper", 30, 0.3, 15, 0.7);
 
+let faintedSound = new Audio("../../assets/fainted.mp3");
+let fightSound = new Audio("../../assets/fight.mp3");
 function wait(ms) {
   var start = new Date().getTime();
   var end = start;
@@ -43,13 +45,23 @@ class Game {
       player2: ""
     };
     this.roundCount = 0;
+    this.song = new Audio("../../assets/song.mp3");
     this.handleMoveSelect = this.handleMoveSelect.bind(this);
   }
   startGame(player1, player2) {
+    this.song.play();
+    this.song.addEventListener(
+      "ended",
+      function() {
+        this.currentTime = 0;
+        this.play();
+      },
+      false
+    );
     this.addplayer(player1);
     this.addplayer(player2);
 
-    this.distributeFighters(2);
+    this.distributeFighters(6);
 
     this.currentFighters.player1 = player1.healthyFighters[0];
     this.currentFighters.player2 = player2.healthyFighters[0];
@@ -113,11 +125,13 @@ class Game {
   }
   playerIsDefeated(numLeft) {
     if (numLeft === 1) {
+      this.song.pause();
       return true;
     }
     return false;
   }
   playRound() {
+    fightSound.play();
     //set to variarbles for easy reference
     let fighter1 = this.currentFighters.player1;
     let fighter2 = this.currentFighters.player2;
@@ -144,6 +158,7 @@ class Game {
       UI.adjustHealth("bottom", fighter2.health, fighter2.baseHealth);
 
       if (fighter2.health <= 0) {
+        faintedSound.play();
         if (this.playerIsDefeated(this.players[1].healthyFighters.length)) {
           UI.displayResultModal("player1");
           return;
@@ -161,6 +176,7 @@ class Game {
 
       //if fainted handle
       if (fighter1.health <= 0) {
+        faintedSound.play();
         if (this.playerIsDefeated(this.players[0].healthyFighters.length)) {
           UI.displayResultModal("player2");
           return;
@@ -175,6 +191,7 @@ class Game {
       UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
 
       if (fighter1.health <= 0) {
+        faintedSound.play();
         if (this.playerIsDefeated(this.players[0].healthyFighters.length)) {
           UI.displayResultModal("player2");
           return;
@@ -189,6 +206,7 @@ class Game {
       }
 
       if (fighter2.health <= 0) {
+        faintedSound.play();
         if (this.playerIsDefeated(this.players[1].healthyFighters.length)) {
           UI.displayResultModal("player1");
           return;
@@ -215,10 +233,10 @@ class Game {
     UI.populateMoves(fighter1, fighter2);
     let topTitle = document.getElementById("top-title");
     let botTitle = document.getElementById("bottom-title");
-    topTitle.innerHTML = `<span>Memes left:<span id="top-memes-left">${
+    topTitle.innerHTML = `Player 1<span>Memes left:<span id="top-memes-left">${
       this.players[0].healthyFighters.length
     }</span></span>`;
-    botTitle.innerHTML = `<span>Memes left:<span id="bottom-memes-left">${
+    botTitle.innerHTML = `Player 2<span>Memes left:<span id="bottom-memes-left">${
       this.players[1].healthyFighters.length
     }</span></span>`;
   }
