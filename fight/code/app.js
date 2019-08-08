@@ -113,12 +113,13 @@ class Game {
       //display text in box
       //do fighter one attack
       fighter1.useAttack(attack1, fighter2);
-
-      //blah blah used ...
-      //do animation
-      //adjust health bar
       UI.adjustHealth("bottom", fighter2.health, fighter2.baseHealth);
 
+      if (fighter2.health < 0) {
+      }
+
+      //if fighter 2 dead return
+      //if alive use attack
       fighter2.useAttack(attack2, fighter1);
       UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
       //its supereffective /not effective
