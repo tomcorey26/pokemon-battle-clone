@@ -9,6 +9,7 @@ export class UI {
     UI.populateMovesText(topMoves, fighter1);
     UI.populateMovesText(bottomMoves, fighter2);
   }
+
   static populateMovesText(el, fighter) {
     //start from 1 to skip over title p element
     for (let i = 1; i < el.children.length; i++) {
@@ -61,6 +62,18 @@ export class UI {
       bar.className = "nes-progress is-error";
     }
   }
+  static displayCommentary(el, user, attack, effectiveness) {
+    el.innerHTML = `<h1>${user.name} used ${attack.name}</h1>`;
+    el.style.display = "block";
+  }
 
   static disableButtons() {}
+}
+
+function wait(ms) {
+  var start = new Date().getTime();
+  var end = start;
+  while (end < start + ms) {
+    end = new Date().getTime();
+  }
 }

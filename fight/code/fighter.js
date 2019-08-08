@@ -1,6 +1,7 @@
 //POKEMON CLASS
 export class Fighter {
-  constructor(health, type, attacks, speed) {
+  constructor(health, type, attacks, speed, name) {
+    this.name = name;
     this.baseHealth = health;
     this.speed = speed;
     this.health = health;

@@ -16,6 +16,14 @@ let smother = new Attack("smother", "paper", 40, 0.2, 5, 0.6);
 let envelop = new Attack("envelop", "paper", 20, 0.3, 12, 0.9);
 let contain = new Attack("contain", "paper", 30, 0.3, 15, 0.7);
 
+function wait(ms) {
+  var start = new Date().getTime();
+  var end = start;
+  while (end < start + ms) {
+    end = new Date().getTime();
+  }
+}
+
 // GAME CLASS
 //holds game state
 //checks if game is over or not
@@ -35,15 +43,16 @@ class Game {
       player2: ""
     };
     this.roundCount = 0;
+    this.handleMoveSelect = this.handleMoveSelect.bind(this);
   }
   startGame(player1, player2) {
-    game.addplayer(player1);
-    game.addplayer(player2);
+    this.addplayer(player1);
+    this.addplayer(player2);
 
-    game.distributeFighters(6);
+    this.distributeFighters(6);
 
-    game.currentFighters.player1 = player1.healthyFighters[0];
-    game.currentFighters.player2 = player2.healthyFighters[0];
+    this.currentFighters.player1 = player1.healthyFighters[0];
+    this.currentFighters.player2 = player2.healthyFighters[0];
     UI.populateMoves(player1.healthyFighters[0], player2.healthyFighters[0]);
   }
 
@@ -54,9 +63,9 @@ class Game {
     //check wether player 1 or player 2 move
     //load to current moves
     if (id.includes("enemy") === true) {
-      game.currentMoves.player1 = move;
+      this.currentMoves.player1 = move;
     } else {
-      game.currentMoves.player2 = move;
+      this.currentMoves.player2 = move;
     }
 
     let moveContainer = e.target.parentNode;
@@ -70,10 +79,10 @@ class Game {
     children[1].innerHTML = "Move Selected!";
 
     //check if both players have moves selected
-    if (game.currentMoves.player1 && game.currentMoves.player2) {
+    if (this.currentMoves.player1 && this.currentMoves.player2) {
       //if they do run fight begin method
       console.log("both moves selected");
-      game.playRound();
+      this.playRound();
     }
   }
 
@@ -95,11 +104,16 @@ class Game {
         attack2 = attack;
       }
     });
-
+    let topBar = document.getElementById("enemy-moves");
+    let bottomBar = document.getElementById("player-moves");
+    let topTitle = document.getElementById("top-title");
+    let botTitle = document.getElementById("bottom-title");
     if (fighter1.speed > fighter2.speed) {
+      console.log("aye");
       //display text in box
       //do fighter one attack
       fighter1.useAttack(attack1, fighter2);
+
       //blah blah used ...
       //do animation
       //adjust health bar
@@ -110,16 +124,12 @@ class Game {
       //its supereffective /not effective
       //check for fainted
     } else {
-      //fighter2
       fighter2.useAttack(attack2, fighter1);
       UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
 
-      //fighter1 attack
+      //do fighter one attack
       fighter1.useAttack(attack1, fighter2);
       UI.adjustHealth("bottom", fighter2.health, fighter2.baseHealth);
-      //blah blah used ...
-      //do animation
-      //adjust health bar
     }
     this.resetRound(fighter1, fighter2);
     //write to dialouge
@@ -130,6 +140,10 @@ class Game {
   }
 
   resetRound(fighter1, fighter2) {
+    let topBar = document.getElementById("enemy-moves");
+    let bottomBar = document.getElementById("player-moves");
+    UI.showMovesContent(topBar);
+    UI.showMovesContent(bottomBar);
     //clear current moves
     this.currentMoves.player1 = "";
     this.currentMoves.player2 = "";
@@ -179,7 +193,8 @@ class Game {
         attributes.health[healthIndex],
         attributes.types[typeIndex],
         attacks,
-        attributes.speed[speedIndex]
+        attributes.speed[speedIndex],
+        "testname"
       );
       //push new fighter to fighters array
       fighters.push(fighter);
