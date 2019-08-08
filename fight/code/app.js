@@ -49,7 +49,7 @@ class Game {
     this.addplayer(player1);
     this.addplayer(player2);
 
-    this.distributeFighters(6);
+    this.distributeFighters(2);
 
     this.currentFighters.player1 = player1.healthyFighters[0];
     this.currentFighters.player2 = player2.healthyFighters[0];
@@ -87,6 +87,31 @@ class Game {
     }
   }
 
+  handleFaint(half) {
+    let topImg = document.getElementById("top-picture");
+    let bottomImg = document.getElementById("bottom-picture");
+    let nextFighter;
+    if (half === "top") {
+      nextFighter = this.players[0].sendOutNextFighter();
+      if (!nextFighter) {
+        console.log("game over");
+      }
+      UI.addFighterPicture(topImg);
+      UI.adjustHealth("top", 1, 1);
+      this.currentFighters.player1 = nextFighter;
+    } else {
+      nextFighter = this.players[1].sendOutNextFighter();
+      if (!nextFighter) {
+        console.log("game over");
+      }
+      UI.addFighterPicture(bottomImg);
+      UI.adjustHealth("bottom", 1, 1);
+      this.currentFighters.player2 = nextFighter;
+    }
+
+    return nextFighter;
+  }
+
   playRound() {
     //set to variarbles for easy reference
     let fighter1 = this.currentFighters.player1;
@@ -105,37 +130,28 @@ class Game {
         attack2 = attack;
       }
     });
-    let topBar = document.getElementById("enemy-moves");
-    let bottomBar = document.getElementById("player-moves");
-    let topTitle = document.getElementById("top-title");
-    let botTitle = document.getElementById("bottom-title");
-    let topImg = document.getElementById("top-picture");
-    let bottomImg = document.getElementById("bottom-picture");
+
+    let isfainted = false;
     if (fighter1.speed > fighter2.speed) {
-      console.log("aye");
       //display text in box
       //do fighter one attack
       fighter1.useAttack(attack1, fighter2);
       UI.adjustHealth("bottom", fighter2.health, fighter2.baseHealth);
 
       if (fighter2.health <= 0) {
-        let nextFighter = this.players[1].sendOutNextFighter();
-        this.currentFighters.player2 = nextFighter;
-        fighter2 = nextFighter;
-        UI.addFighterPicture(bottomImg);
-        UI.adjustHealth("bottom", 1, 1);
+        fighter2 = this.handleFaint("bottom");
+        isfainted = true;
       }
 
       //if fighter 2 dead return
       //if alive use attack
-      fighter2.useAttack(attack2, fighter1);
-      UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
+      if (!isfainted) {
+        fighter2.useAttack(attack2, fighter1);
+        UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
+      }
+
       if (fighter1.health <= 0) {
-        let nextFighter = this.players[0].sendOutNextFighter();
-        this.currentFighters.player1 = nextFighter;
-        fighter1 = nextFighter;
-        UI.addFighterPicture(topImg);
-        UI.adjustHealth("top", 1, 1);
+        fighter1 = this.handleFaint("top");
       }
       //its supereffective /not effective
       //check for fainted
@@ -144,23 +160,17 @@ class Game {
       UI.adjustHealth("top", fighter1.health, fighter1.baseHealth);
 
       if (fighter1.health <= 0) {
-        let nextFighter = this.players[0].sendOutNextFighter();
-        this.currentFighters.player1 = nextFighter;
-        fighter1 = nextFighter;
-        UI.addFighterPicture(topImg);
-        UI.adjustHealth("top", 1, 1);
+        fighter1 = this.handleFaint("top");
       }
 
       //do fighter one attack
-      fighter1.useAttack(attack1, fighter2);
-      UI.adjustHealth("bottom", fighter2.health, fighter2.baseHealth);
+      if (!isfainted) {
+        fighter1.useAttack(attack1, fighter2);
+        UI.adjustHealth("bottom", fighter2.health, fighter2.baseHealth);
+      }
 
       if (fighter2.health <= 0) {
-        let nextFighter = this.players[1].sendOutNextFighter();
-        this.currentFighters.player2 = nextFighter;
-        fighter2 = nextFighter;
-        UI.addFighterPicture(bottomImg);
-        UI.adjustHealth("bottom", 1, 1);
+        fighter2 = this.handleFaint("bottom");
       }
     }
     this.resetRound(fighter1, fighter2);
