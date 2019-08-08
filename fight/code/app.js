@@ -49,7 +49,7 @@ class Game {
     this.addplayer(player1);
     this.addplayer(player2);
 
-    this.distributeFighters(1);
+    this.distributeFighters(2);
 
     this.currentFighters.player1 = player1.healthyFighters[0];
     this.currentFighters.player2 = player2.healthyFighters[0];
@@ -215,8 +215,12 @@ class Game {
     UI.populateMoves(fighter1, fighter2);
     let topTitle = document.getElementById("top-title");
     let botTitle = document.getElementById("bottom-title");
-    topTitle.innerHTML = "Player 1";
-    botTitle.innerHTML = "Player 2";
+    topTitle.innerHTML = `<span>Memes left:<span id="top-memes-left">${
+      this.players[0].healthyFighters.length
+    }</span></span>`;
+    botTitle.innerHTML = `<span>Memes left:<span id="bottom-memes-left">${
+      this.players[1].healthyFighters.length
+    }</span></span>`;
   }
 
   addplayer(player) {

@@ -115,6 +115,15 @@ export class UI {
 
     modal.style.display = "block";
   }
+  static displayMemesleft(half, count) {
+    let top = document.getElementById("top-memes-left");
+    let bottom = document.getElementById("bottom-memes-left");
+    if (half === "top") {
+      top.textContent = count;
+    } else {
+      bottom.textContent = count;
+    }
+  }
 }
 
 function wait(ms) {
