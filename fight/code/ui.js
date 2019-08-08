@@ -91,6 +91,39 @@ export class UI {
     el.innerHTML = `<h1>${user.name} used ${attack.name}</h1>`;
     el.style.display = "block";
   }
+
+  static displayResultModal(winner) {
+    let modal = document.querySelector(".modal");
+    let result = document.getElementById("result");
+    if (winner === "player1") {
+      //show modal
+      result.innerHTML = `
+      <h3>Player 1 Wins!</h3>
+      <button class="nes-btn" onClick="window.location.reload();">
+          Play again!
+      </button>
+    
+      `;
+    } else {
+      //show modal
+      result.innerHTML = `
+      <h3>Player 2 Wins!</h3>
+      <button class="nes-btn" onClick="window.location.reload();">
+          Play again!
+      </button>`;
+    }
+
+    modal.style.display = "block";
+  }
+  static displayMemesleft(half, count) {
+    let top = document.getElementById("top-memes-left");
+    let bottom = document.getElementById("bottom-memes-left");
+    if (half === "top") {
+      top.textContent = count;
+    } else {
+      bottom.textContent = count;
+    }
+  }
 }
 
 function wait(ms) {
