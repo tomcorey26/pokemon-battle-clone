@@ -4,11 +4,15 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node server/index.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "jest": "^24.8.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
